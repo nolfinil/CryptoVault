@@ -24,10 +24,3 @@ keys/
 src/uploads/
 uploads/
 
-# Временные скрипты для фиксов (не нужны в репозитории)
-fix_*.py
-setup_*.py
-create_*.py
-final_fix.py
-cleanup.py
-force_update.py

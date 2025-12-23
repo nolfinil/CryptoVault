@@ -1,0 +1,8 @@
+cryptography>=41.0.0    # For AES, RSA, ECDSA (Messaging/Files)
+pyotp>=2.9.0            # For TOTP (Authentication)
+argon2-cffi>=23.1.0     # For password hashing (Authentication)
+qrcode>=7.4.2           # For generating QR codes (Authentication)
+Pillow>=10.0.0          # For image processing (QR codes)
+pyzbar>=0.1.8           # For decoding QR codes (Authentication)
+mnemonic>=0.20.0        # For BIP39 mnemonic generation (Wallets
+  
