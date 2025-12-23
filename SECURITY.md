@@ -66,9 +66,3 @@ This document describes the threat model and security controls implemented in Cr
 
 ## Reporting
 If a vulnerability is found: document steps to reproduce and add tests before fixing.
-
-
-
-
-
-/
