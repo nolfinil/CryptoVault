@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 text-center">
+        <div class="card p-5">
+            <h2 class="text-success">Registration Successful!</h2>
+            <p>Scan this QR code with Google Authenticator:</p>
+            <img src="data:image/png;base64,{{ qr_code }}" class="img-fluid mb-3" style="max-width: 200px;">
+            <p>Or enter manually: <code>{{ secret }}</code></p>
+            <a href="/login" class="btn btn-primary mt-3">Go to Login</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-5">
+        
+        <div class="card p-3 mb-4 shadow-sm">
+            <h5 class="card-title text-primary"><i class="bi bi-chat-dots"></i> Secure Messaging</h5>
+            <form action="/send" method="POST">
+                <div class="mb-3">
+                    <label>Recipient (Получатель)</label>
+                    <select name="recipient" class="form-select">
+                        {% for user in users %}
+                            {% if user != username %}
+                            <option value="{{ user }}">{{ user }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <textarea name="message" class="form-control" rows="2" placeholder="Введите секретное сообщение..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Encrypt & Send</button>
+            </form>
+        </div>
+
+        <div class="card p-3 mb-4 shadow-sm border-warning" style="border-left: 5px solid #ffc107;">
+            <h5 class="card-title text-warning"><i class="bi bi-safe"></i> File Vault (AES-256)</h5>
+            
+            <form action="/encrypt_file" method="POST" enctype="multipart/form-data" class="mb-3">
+                <div class="mb-2">
+                    <input type="file" name="file" class="form-control form-control-sm" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" name="password" class="form-control form-control-sm" placeholder="Пароль шифрования" required>
+                    <button type="submit" class="btn btn-warning btn-sm">Зашифровать</button>
+                </div>
+            </form>
+
+            <hr class="my-2">
+
+            <h6 class="small text-muted">Мои зашифрованные файлы:</h6>
+            {% if files %}
+                <ul class="list-group list-group-flush small">
+                {% for f in files %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
+                        <div class="text-truncate me-2" style="max-width: 140px;" title="{{ f }}">
+                            <i class="bi bi-file-earmark-lock"></i> {{ f }}
+                        </div>
+                        <form action="/decrypt_file" method="POST" class="d-flex" style="width: auto;">
+                            <input type="hidden" name="filename" value="{{ f }}">
+                            <input type="password" name="password" class="form-control form-control-sm me-1" placeholder="Pwd" style="width: 70px; font-size: 0.7rem;" required>
+                            <button type="submit" class="btn btn-sm btn-outline-success py-0" style="font-size: 0.75rem;">Скачать</button>
+                        </form>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted small mb-0">Нет файлов.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="col-md-7">
+        <div class="card p-3 shadow-sm h-100">
+            <h5 class="card-title text-success"><i class="bi bi-inbox"></i> Secure Inbox</h5>
+            {% if messages %}
+                <div class="list-group list-group-flush">
+                {% for msg in messages %}
+                    <div class="list-group-item list-group-item-{{ msg.class }} mb-2 rounded border">
+                        <div class="d-flex w-100 justify-content-between border-bottom pb-1 mb-2">
+                            <strong>From: {{ msg.from }}</strong>
+                            <span class="badge bg-secondary">{{ msg.status }}</span>
+                        </div>
+                        <p class="mb-0 fs-6">{{ msg.content }}</p>
+                    </div>
+                {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-light text-center mt-5">
+                    <h4>📭 Входящих нет</h4>
+                    <p class="text-muted">Здесь появятся расшифрованные сообщения.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
